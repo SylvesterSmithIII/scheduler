@@ -3,7 +3,11 @@
 import { useState, useEffect } from 'react';
 
 function EscrowForm() {
-    const [names, setNames] = useState(['']);
+    const [names, setNames] = useState([{
+      firstName: '',
+      lastName: ''
+    }]);
+    
     const [formData, setFormData] = useState({
         role: '',
         propertyAddress: '',
@@ -19,11 +23,6 @@ function EscrowForm() {
         console.log(formData)
     }, [formData])
 
-    const handleInputChange = (e) => {
-        const { name, type, value, checked } = e.target;
-        setFormData(prev => ({ ...prev, [name]: type === 'checkbox' ? checked : value }));
-    };
-
     const handleChange = (e) => {
         setFormData({
             ...formData,
@@ -32,10 +31,11 @@ function EscrowForm() {
     }
 
     const handleNameChange = (index, event) => {
-        const newNames = [...names]; // Create a new copy of the names array
-        console.log(index, event)
-        newNames[index] = event.target.value; // Update the value at the specified index
-        setNames(newNames); // Set the new array to state
+      const { name, value } = event.target; // Destructure name and value from the event
+      const updatedNames = [...names]; // Make a shallow copy of the names array
+      updatedNames[index][name] = value; // Update the specific field
+      console.log(updatedNames)
+      setNames(updatedNames); // Update state
     };
 
     const handleSubmit = async (e) => {
@@ -52,41 +52,90 @@ function EscrowForm() {
     }
 
     const addNameField = () => {
-        setNames([...names, ''])
+        setNames([...names, { firstName: "", lastName: "" }])
     }
 
     return (
         <>
         
-        <div className="max-w-screen-xl mx-auto px-4 bg-[#f2f6f5] flex flex-col">
+        <div className="max-w-screen-xl mx-auto px-4  flex flex-col">
   <header className="flex justify-between items-center py-4">
     <div className="flex items-center gap-1">
-      <img className="w-8 h-8" src="https://via.placeholder.com/27x27" alt="Logo" />
+      
       <h1 className="text-2xl font-normal text-[#19332c]">FormApp</h1>
     </div>
   </header>
 
-  <main className="flex flex-col gap-4 p-4">
-    <h2 className="text-2xl font-normal">Real Estate Transaction Form</h2>
+  <main className="flex flex-col gap-8 p-4">
+    <h2 className="text-2xl font-normal text-center">Add Signing</h2>
 
     <div className="flex flex-col gap-4">
-      <label className="flex flex-col">
+
+      <div className='flex flex-col'>
+        <div className='flex'>
+          <h3 className='flex-1'>Buer Name</h3>
+          <h3 className='flex-1'>Last Name</h3>
+        </div>
+        <div className='flex'>
+          <h3 className='flex-1'>First Name</h3>
+          <h3 className='flex-1'>Last Name</h3>
+        </div>
+
+      </div>
+      
+    <label className="flex flex-col text-2xl">
         Buyer/Seller
-        <div>
+        <div className='text-xl'>
         <button className={` text-black rounded-full py-1 px-2 ${formData.role === 'buyer' ? 'bg-green-700' : 'bg-white'}`} onClick={HandleClick} value={'buyer'}>Buyer</button>
         <button className={` text-black rounded-full py-1 px-2 ${formData.role === 'seller' ? 'bg-green-700' : 'bg-white'}`} onClick={HandleClick} value={'seller'}>Seller</button>
         </div>
         
       </label>
 
-      <label className="flex flex-col">
-        Name
-        {
-            names.map((name, index) => 
-            <input key={index} type="text" placeholder="Enter Name" className="mt-1 p-2 bg-white border rounded-full" onChange={(e) => handleNameChange(index, e)} />
-        )}
-        <button onClick={addNameField} className='hover:scale-125  transition-all duration-300'>Add Another Signer</button>
-      </label>
+      <div className='flex flex-col gap-4'>
+
+        
+        {names.map((name, index) => (
+
+          <>
+          
+          <div className='flex gap-12'>
+          <h3 className='flex-1'>First Name</h3>
+          <h3 className='flex-1'>Last Name</h3>
+        </div>
+
+        <div className="flex gap-12 mb-4" key={index}>
+          <input
+            type="text"
+            name="firstName"
+            placeholder="First Name"
+            value={name.firstName} // Controlled input
+            onChange={(event) => handleNameChange(index, event)} // Handle change
+            className="border p-2 flex-1"
+          />
+          <input
+            type="text"
+            name="lastName"
+            placeholder="Last Name"
+            value={name.lastName} // Controlled input
+            onChange={(event) => handleNameChange(index, event)} // Handle change
+            className="border p-2 flex-1"
+          />
+        </div>
+        </>
+      ))}
+       
+
+      </div>
+
+      <div className='flex justify-center'>
+
+      <button onClick={addNameField} className="group relative h-12 overflow-hidden overflow-x-hidden rounded-md bg-neutral-50 hover:text-neutral-50 duration-300 px-8 py-2 max-w-64 transition-all"><span class="relative z-10"></span>Add Another Signing<span class="absolute inset-0 overflow-hidden rounded-md"><span class="absolute left-0 aspect-square w-full origin-center -translate-x-full rounded-full bg-[#2a5a49]  transition-all duration-500 group-hover:-translate-x-0 group-hover:scale-150"></span></span></button>
+      
+      
+      
+
+      </div>
 
       <label className="flex flex-col">
         Property Address
@@ -123,7 +172,7 @@ function EscrowForm() {
 
       <label className="flex flex-col">
         Notes
-        <textarea placeholder="Enter any additional notes" name='' className="mt-1 p-2 bg-white border rounded-full" rows="3" onChange={handleChange}></textarea>
+        <textarea placeholder="Enter any additional notes" name='notes' className="mt-1 p-2 bg-white border rounded-full" rows="3" onChange={handleChange}></textarea>
       </label>
 
       <button className="w-full py-2 bg-[#19332c] text-white rounded-full">Submit</button>
