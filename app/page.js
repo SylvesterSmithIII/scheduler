@@ -3,6 +3,7 @@ import Image from "next/image";
 export default function Home() {
 
   return (
+<<<<<<< HEAD
     <div className="w-[1440px] h-[2990px] px-[46px] bg-[#fafefc] flex-col justify-start items-start inline-flex overflow-hidden">
   <div className="self-stretch py-3 bg-[#fafefc] justify-between items-center inline-flex">
     <div className="justify-start items-center gap-6 flex">
@@ -11,6 +12,10 @@ export default function Home() {
         <div className="w-7 h-7 relative  overflow-hidden" />
         <div className="text-[#158348] text-[28px] font-bold font-['Sen'] leading-7">SignIt</div>
       </div>
+=======
+    <div >
+     <button class="group relative h-12 overflow-hidden overflow-x-hidden rounded-md bg-neutral-50 hover:text-neutral-50 duration-300 px-8 py-2 "><span class="relative z-10">Hover Me</span><span class="absolute inset-0 overflow-hidden rounded-md"><span class="absolute left-0 aspect-square w-full origin-center -translate-x-full rounded-full bg-[#2a5a49]  transition-all duration-500 group-hover:-translate-x-0 group-hover:scale-150"></span></span></button>
+>>>>>>> a515bf786b011e30fe3a2a54bf57f0ad2548b472
     </div>
     <div className="h-10 justify-end items-center gap-6 flex">
       <div className="w-6 h-6 relative  overflow-hidden" />
