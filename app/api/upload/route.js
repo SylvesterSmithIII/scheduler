@@ -51,6 +51,9 @@ export async function POST(req) {
             ? `You are a real estate assistant. Analyze the following Purchase and Sale Agreement and extract:
 - Buyer and seller names
 - Property address
+-Pacel Number
+-All addenda in contract
+-were all addenda signed by all buyers and sellers
 - Closing date
 - Earnest money amount
 - Contingencies and their deadlines
@@ -59,6 +62,9 @@ Return the results in JSON format.`
             : `You are a real estate assistant. Analyze the following Title Report and extract:
 - Property legal description
 - Recorded owner
+-Sales Price
+-Loan Amount
+-is there an Hoa and whats the name
 - Easements or encumbrances
 - Exceptions to title insurance
 - Required documents or actions before closing
